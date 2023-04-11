@@ -24,7 +24,7 @@ function App(props) {
     setMovies(editedMovieList);
   }
 
-  function deleteTask(id) {
+  function deleteMovie(id) {
     const remainingMovies = movies.filter((movie) => id !== movie.id);
     setMovies(remainingMovies);
   }
@@ -46,7 +46,7 @@ function App(props) {
       completed={movie.completed} 
       key={movie.id}
       toggleMovieCompleted={toggleMovieCompleted}
-      deleteTask={deleteTask}
+      deleteMovie={deleteMovie}
       editMovie={editMovie}
     />
   ));  
@@ -61,9 +61,9 @@ function App(props) {
       <Form addMovie={addMovie} />
 
       <div className="filters btn-group stack-exception">
-        <FilterButton />
-        <FilterButton />
-        <FilterButton />
+        <FilterButton name="All"/>
+        <FilterButton name="To Watch"/>
+        <FilterButton name="Watched"/>
       </div>
       <h2 id="list-heading">{headingText}</h2>
       <ul
