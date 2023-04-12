@@ -5,9 +5,26 @@ import Movie from './components/Movie';
 import Form from './components/Form';
 import FilterButton from './components/FilterButton';
 
+const FILTER_MAP = {
+  All: () => true,
+  'To Watch': (movie) => !movie.completed,
+  Watched: (movie) => movie.completed
+};
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+
 
 function App(props) {
   const [movies, setMovies] = useState(props.movies);
+  const [filter, setFilter] = useState('All');
+
+  const filterList = FILTER_NAMES.map((name) => (
+    <FilterButton 
+      key={name} 
+      name={name} 
+      isPressed={name === filter}
+      setFilter={setFilter}
+    />
+  ))
 
   function addMovie(name) {
     const newMovie = { id: `todo-${ nanoid() }`, name, completed: false };
@@ -39,19 +56,19 @@ function App(props) {
     setMovies(updatedMovies);
   }
   
-  const movieList = movies.map((movie) => (
-    <Movie 
-      id={movie.id} 
-      name={movie.name} 
-      completed={movie.completed} 
-      key={movie.id}
-      toggleMovieCompleted={toggleMovieCompleted}
-      deleteMovie={deleteMovie}
-      editMovie={editMovie}
-    />
+  const movieList = movies
+    .filter(FILTER_MAP[filter])
+    .map((movie) => (
+      <Movie 
+        id={movie.id} 
+        name={movie.name} 
+        completed={movie.completed} 
+        key={movie.id}
+        toggleMovieCompleted={toggleMovieCompleted}
+        deleteMovie={deleteMovie}
+        editMovie={editMovie}
+      />
   ));  
-  const moviePlural = movieList.length !== 1 ? 'movies' : 'movie';
-  const headingText = `${movieList.length} ${moviePlural} remaining`
 
   return (
     <div className="todoapp stack-large">
@@ -61,11 +78,8 @@ function App(props) {
       <Form addMovie={addMovie} />
 
       <div className="filters btn-group stack-exception">
-        <FilterButton name="All"/>
-        <FilterButton name="To Watch"/>
-        <FilterButton name="Watched"/>
+        {filterList}
       </div>
-      <h2 id="list-heading">{headingText}</h2>
       <ul
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"

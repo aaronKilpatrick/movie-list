@@ -159,6 +159,9 @@ body {
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
 }
+.filters {
+  margin-bottom: 80px;
+}
 [class*="stack"] > * {
   margin-top: 0;
   margin-bottom: 0;
@@ -179,6 +182,7 @@ body {
 }
 .stack-exception {
   margin-top: 1.2rem;
+  margin-bottom: 3rem;
 }
 /* END GLOBAL STYLES */
 .todoapp {
@@ -241,19 +245,25 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2.5rem 5rem 0 rgba(0, 0, 0, 0.1);
 }
+
 .todo > * {
   flex: 0 0 100%;
 }
+
 .todo-text {
   width: 100%;
   min-height: 4.4rem;
   padding: 0.4rem 0.8rem;
   border: 2px solid #565656;
 }
+
 .todo-text:focus {
   box-shadow: inset 0 0 0 2px;
 }
+
 /* CHECKBOX STYLES */
 .c-cb {
   box-sizing: border-box;
